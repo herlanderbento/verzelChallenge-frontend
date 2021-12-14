@@ -4,7 +4,9 @@ import { NavbarBrand } from "reactstrap";
 export function Logo() {
   return (
     <Link to="/">
-      <NavbarBrand>dv.course</NavbarBrand>
+      <NavbarBrand>
+        dv<span>.</span>courses
+      </NavbarBrand>
     </Link>
   );
 }

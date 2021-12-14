@@ -8,7 +8,7 @@ export const allData = [
   },
   {
     id: uuid(),
-    route: `/about-us`,
+    route: `/courses`,
     menu: "Calendário das aulas",
   },
 ];

@@ -17,6 +17,10 @@ export const HeaderContent = styled.header`
     font-size: 32px;
     font-weight: 600;
     margin-right: 80px;
+
+    span {
+      color: var(--green-light);
+    }
   }
 
   .navbar-toggler {
@@ -60,13 +64,13 @@ export const HeaderContent = styled.header`
       bottom: 0;
       width: 100%;
       height: 3px;
-      background: var(--green);
+      background: var(--yellow-dark);
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       opacity: 0;
 
       @media screen and (max-width: 767px) {
-        width: 5%;
+        width: 14%;
       }
     }
 
@@ -84,7 +88,7 @@ export const HeaderContent = styled.header`
     position: relative !important;
     &::after {
       content: "";
-      background: var(--green);
+      background: var(--yellow-dark);
       width: 100%;
       height: 3px !important;
       position: absolute;
@@ -95,7 +99,7 @@ export const HeaderContent = styled.header`
       border-top-right-radius: 10px;
 
       @media screen and (max-width: 767px) {
-        width: 5%;
+        width: 14%;
       }
     }
   }
@@ -120,6 +124,6 @@ export const Button = styled.button`
   svg {
     margin-right: 8px;
     font-size: 22px;
-    color: var(--green);
+    color: var(--yellow-dark);
   }
 `;

@@ -36,6 +36,7 @@ export default createGlobalStyle`
     --orange-darker: #412c17;
     --orange-darkness: #593918;
     --yellow: #ffcd1e;
+    --yellow-dark: #eba417;
     --primary: #8257e5;
     --primary-darker: #28203e;
     --primary-hover: #9466ff;

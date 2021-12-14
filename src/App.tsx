@@ -1,7 +1,18 @@
+import { BrowserRouter } from "react-router-dom";
+
+import Routes from "./routes";
+import GlobalStyle from "./styles/global";
+
+import Header from "./components/Header";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
 export default function App() {
   return (
-    <div className="App">
-      <h2>Herlander</h2>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <GlobalStyle />
+      <Routes />
+    </BrowserRouter>
   );
 }

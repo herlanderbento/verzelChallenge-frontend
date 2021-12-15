@@ -1,32 +1,70 @@
-import { useState } from "react";
-import { BsMailbox } from "react-icons/bs";
+import { useEffect, useState } from "react";
 import { Col, Row, TabContent, TabPane } from "reactstrap";
 import { Container } from "../../styles/container";
 import { styleHyphenFormat } from "../../utils";
 import { Title, TitleRight } from "../Title";
-import { allDataModules } from "./data";
-import {
-  CardCourseItems,
-  CardItems,
-  CourseContent,
-  Section,
-  VideoBg,
-} from "./styles";
-
+import { CourseContent, Section } from "./styles";
 import video from "../../assets/video/video.mp4";
-import { AiFillCalendar } from "react-icons/ai";
+import { api } from "../../services/api";
+import { Cards } from "./cards";
+import { CardsCourses } from "./cardsCourses";
 
 interface IAllDataModules {
   id: string;
   name: string;
+  lessonCount: number;
+}
+
+interface IGetId {
+  id: string;
+}
+
+interface ILesson {
+  id: string;
+  name: string;
+  date_lesson: Date;
+  module_id: string;
+}
+
+interface IAllDataModulesLesson {
+  id: string;
+  name: string;
+  lessonCount: number;
+  lesson: ILesson[];
 }
 
 export function CoursePage() {
-  const getFirstId = allDataModules.map((data) => data.id)[0];
+  const [modules, setModules] = useState([]);
+  const [modulesLessons, setModulesLessons] = useState([]);
+
+  const getFirstId = modules.map((data: IGetId) => data?.id)[0];
 
   const [activeTab, setActiveTab] = useState(
     `${styleHyphenFormat(getFirstId)}`
   );
+
+  useEffect(() => {
+    async function fetchModules() {
+      try {
+        const { data } = await api.get("modules");
+        setModules(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function fetchModulesAndLessons() {
+      try {
+        const { data } = await api.get("modules/lessons");
+        setModulesLessons(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchModules();
+    fetchModulesAndLessons();
+  }, []);
 
   return (
     <Section>
@@ -41,25 +79,17 @@ export function CoursePage() {
             />
             <div className="modules-items">
               <Row className="pt-3">
-                {allDataModules?.map(({ id, name }: IAllDataModules) => (
-                  <Col lg="12" md="4" sm="6" className="mb-4" key={id}>
-                    <CardItems
-                      className={
-                        activeTab === `${styleHyphenFormat(id)}` ? "active" : ""
-                      }
-                      onClick={() => setActiveTab(`${styleHyphenFormat(id)}`)}
-                    >
-                      <div className="d-flex">
-                        <div className="icon icon-color-1">
-                          <BsMailbox size={28} />
-                        </div>
-                        <div className="text">
-                          <h5 className="title">{name}</h5>
-                          <p className="desc">3/3 aulas</p>
-                        </div>
-                      </div>
-                    </CardItems>
-                  </Col>
+                {modules?.map(({ id, name, lessonCount }: IAllDataModules) => (
+                  <Cards
+                    key={styleHyphenFormat(id)}
+                    className={
+                      activeTab === `${styleHyphenFormat(id)}` ? "active" : ""
+                    }
+                    onClick={() => setActiveTab(`${styleHyphenFormat(id)}`)}
+                    name={name}
+                    lessonCountOne={lessonCount}
+                    lessonCountTwo={lessonCount}
+                  />
                 ))}
               </Row>
             </div>
@@ -67,55 +97,30 @@ export function CoursePage() {
           <Col lg="9" md="9" sm="12">
             <CourseContent>
               <TabContent activeTab={activeTab}>
-                <TabPane
-                  tabId={`${styleHyphenFormat(
-                    "0080c03e-9439-4cd1-aa7b-853f28ddf74d"
-                  )}`}
-                >
-                  <Row>
-                    <Col lg="12" className="mb-4  course-header">
-                      <TitleRight
-                        className="sub-title-right"
-                        subTitle="Projecto Frontend"
-                        text="Todas as aulas disponíveis nesse módulo:"
-                      />
-                    </Col>
-                    <Col lg="4">
-                      <CardCourseItems>
-                        <div className="video-content">
-                          <VideoBg
-                            playsInline
-                            autoPlay
-                            loop
-                            muted
-                            src={video}
-                          />
-                        </div>
-                        <div className="description">
-                          <h2>Iniciando como programador(a) na Devaria</h2>
-                          <div className="date">
-                            <AiFillCalendar size={25} />
-                            <span>7 Março 2021</span>
-                          </div>
-                        </div>
-                      </CardCourseItems>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane
-                  tabId={`${styleHyphenFormat(
-                    "dda392c4-36bd-4878-9dde-06067685e23b"
-                  )}`}
-                >
-                  Tab 2 Content
-                </TabPane>
-                <TabPane
-                  tabId={`${styleHyphenFormat(
-                    "40ce95ef-2e7a-45a3-90ae-99491a47c527"
-                  )}`}
-                >
-                  Tab 3 Content
-                </TabPane>
+                {modulesLessons?.map((data: IAllDataModulesLesson) => (
+                  <TabPane
+                    key={styleHyphenFormat(data?.id)}
+                    tabId={`${styleHyphenFormat(data?.id)}`}
+                  >
+                    <Row>
+                      <Col lg="12" className="mb-4  course-header">
+                        <TitleRight
+                          className="sub-title-right"
+                          subTitle={data?.name}
+                          text="Todas as aulas disponíveis nesse módulo:"
+                        />
+                      </Col>
+                      {data?.lesson?.map(({ id, name, date_lesson }) => (
+                        <CardsCourses
+                          video={video}
+                          key={styleHyphenFormat(id)}
+                          name={name}
+                          date_lesson={date_lesson}
+                        />
+                      ))}
+                    </Row>
+                  </TabPane>
+                ))}
               </TabContent>
             </CourseContent>
           </Col>

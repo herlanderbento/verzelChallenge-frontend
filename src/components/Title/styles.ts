@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Section = styled.div`
-  .sub-title {
+  .sub-title,
+  .sub-title-right {
     display: block;
     color: var(--yellow-dark);
     font-size: 20px;
@@ -12,7 +13,9 @@ export const Section = styled.div`
     position: relative;
     margin-bottom: 14px;
     padding-bottom: 14px;
+  }
 
+  .sub-title {
     &::before,
     &::after {
       content: "";
@@ -35,11 +38,38 @@ export const Section = styled.div`
     }
   }
 
+  .sub-title-right {
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      background: var(--yellow-dark);
+    }
+
+    &::before {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      right: 40px;
+    }
+    &::after {
+      right: 0px;
+      border-radius: 10px;
+      width: 35px;
+      height: 3px;
+    }
+  }
+
   .title {
     font-size: 46px;
     font-family: "Roboto", sans-serif;
     color: var(--gray);
     margin-bottom: 28px;
+  }
+
+  .text {
+    font-size: 14px;
   }
 `;
 

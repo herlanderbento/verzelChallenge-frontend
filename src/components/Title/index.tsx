@@ -7,11 +7,22 @@ interface ITitleProps {
   className?: string;
 }
 
-export function Title({ subTitle, title }: ITitleProps) {
+export function Title({ className, subTitle, title, text }: ITitleProps) {
   return (
     <Section>
-      <span className="sub-title">{subTitle}</span>
+      <span className={`sub-title ${className}`}>{subTitle}</span>
       <h2 className="title">{title}</h2>
+      <p className="text">{text}</p>
+    </Section>
+  );
+}
+
+export function TitleRight({ subTitle, title, text }: ITitleProps) {
+  return (
+    <Section>
+      <span className={`sub-title-right`}>{subTitle}</span>
+      <h2 className="title">{title}</h2>
+      <p className="text">{text}</p>
     </Section>
   );
 }

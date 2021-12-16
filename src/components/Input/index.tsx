@@ -44,14 +44,14 @@ export function Input({ icon: Icon, isPassword = false, ...rest }: IProps) {
       />
       {isPassword &&
         (showPassword ? (
-          <FaEyeSlash
+          <FaEye
             size={16}
             color="#eba417"
             onClick={() => setShowPassword(!showPassword)}
             className="icon-click"
           />
         ) : (
-          <FaEye
+          <FaEyeSlash
             size={16}
             color="#eba417"
             onClick={() => setShowPassword(!showPassword)}

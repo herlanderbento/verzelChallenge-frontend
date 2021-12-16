@@ -1,11 +1,15 @@
 import { Col, Row } from "reactstrap";
+
 import { Container } from "../../styles/container";
 import { Section } from "./styles";
 
 import emoji from "../../assets/icon/emoji.svg";
 import banner from "../../assets/img/layer.png";
+import { useHistory } from "react-router-dom";
 
 export function HomePage() {
+  const { push } = useHistory();
+
   return (
     <Section>
       <Container>
@@ -27,7 +31,9 @@ export function HomePage() {
               </p>
 
               <div className="cta mb-3">
-                <button className="sign-up">Cadastra-se agora</button>
+                <button onClick={() => push("/sign-up")} className="sign-up">
+                  Cadastra-se agora
+                </button>
               </div>
             </div>
           </Col>

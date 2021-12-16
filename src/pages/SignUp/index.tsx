@@ -3,9 +3,10 @@ import {
   FaFacebookF,
   FaGoogle,
   FaLock,
+  FaUser,
   FaWhatsapp,
 } from "react-icons/fa";
-import { Input } from "./../../components/Input";
+import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { FormContent, Section, Description } from "./styles";
 import { useState, FormEvent } from "react";
@@ -14,9 +15,10 @@ import { BtnSecond } from "../../components/Button/styles";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 
-export function SignIn() {
+export function SignUp() {
   const { push } = useHistory();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,6 +26,7 @@ export function SignIn() {
     event.preventDefault();
 
     const data = {
+      name,
       email,
       password,
     };
@@ -45,9 +48,9 @@ export function SignIn() {
                 a navegar na <br />
                 plataforma
               </h4>
-              <BtnSecond onClick={() => push("/sign-up")}>
+              <BtnSecond onClick={() => push("/sign-in")}>
                 <AiOutlineUserAdd />
-                Cadastrar-se agora
+                Faz o login
               </BtnSecond>
             </Description>
           </Col>
@@ -58,6 +61,18 @@ export function SignIn() {
               </div>
 
               <form onSubmit={handleSubmit}>
+                <div className="form-items">
+                  <Input
+                    icon={FaUser}
+                    name="email"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="name"
+                    type="text"
+                    required
+                  />
+                </div>
+
                 <div className="form-items">
                   <Input
                     icon={FaEnvelope}

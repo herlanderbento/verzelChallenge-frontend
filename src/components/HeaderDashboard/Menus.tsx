@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { Collapse, Nav, NavbarToggler } from "reactstrap";
 import { allData } from "./data";
 import { Link } from "./Link";
 import { UserInfo } from "../UserInfo";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Menus() {
-  const { push } = useHistory();
+  const { signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -26,7 +27,7 @@ export function Menus() {
           ))}
         </Nav>
         <UserInfo />
-        <AiOutlineLogout className="icon" size={28} />
+        <AiOutlineLogout onClick={signOut} className="icon" size={28} />
       </Collapse>
     </>
   );

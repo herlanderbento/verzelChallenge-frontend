@@ -1,10 +1,11 @@
 import { UserContainer, Avatar } from "./styles";
+import { useAuth } from "../../hooks/useAuth";
 
 export function UserInfo() {
-  const user = "Herlander Bento";
+  const { user } = useAuth();
 
   function formatName() {
-    const nameSplit = user.split(" ");
+    const nameSplit = user?.name.split(" ");
 
     if (nameSplit.length > 1) {
       return `${nameSplit[0].charAt(0)}${nameSplit[1].charAt(0)}`.toUpperCase();
@@ -15,7 +16,7 @@ export function UserInfo() {
   return (
     <UserContainer>
       <Avatar>{formatName()}</Avatar>
-      <span>{user}</span>
+      <span>{user?.name}</span>
     </UserContainer>
   );
 }

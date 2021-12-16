@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { Courses } from "../pages/Courses";
 import { Dashboard } from "../pages/Dashboard";
 import { Home } from "../pages/Home";
@@ -8,6 +8,8 @@ import { SignUp } from "../pages/SignUp";
 import { Users } from "../pages/Users";
 import { Lessons } from "../pages/Lessons";
 
+import Route from "./routes";
+
 export default function Routes() {
   return (
     <Switch>
@@ -15,10 +17,10 @@ export default function Routes() {
       <Route exact path="/courses" component={Courses} />
       <Route exact path="/sign-in" component={SignIn} />
       <Route exact path="/sign-up" component={SignUp} />
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/users" component={Users} />
-      <Route exact path="/modules" component={ModulePages} />
-      <Route exact path="/lessons" component={Lessons} />
+      <Route exact path="/dashboard" component={Dashboard} isPrivate />
+      <Route exact path="/users" component={Users} isPrivate />
+      <Route exact path="/modules" component={ModulePages} isPrivate />
+      <Route exact path="/lessons" component={Lessons} isPrivate />
     </Switch>
   );
 }

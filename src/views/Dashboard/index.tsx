@@ -9,9 +9,10 @@ import { RiSoundModuleLine } from "react-icons/ri";
 import { SiDiscourse } from "react-icons/si";
 import { api } from "../../services/api";
 import { useEffect, useState } from "react";
-import { allDataLessons } from "../Courses/data";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const [allDataLessons, setAllDataLessons] = useState([]);
   const [allCountUsers, setAllCountUsers] = useState([]);
   const [allCountModules, setAllCountModules] = useState([]);
@@ -62,7 +63,7 @@ export default function Dashboard() {
               <div className="info">
                 <img src={emoji} alt="" />
                 <h4 className="h4-info">
-                  Hey <span>Herlander</span>, seja bem-vindo!
+                  Hey <span>{user?.name}</span>, seja bem-vindo!
                 </h4>
               </div>
             </div>

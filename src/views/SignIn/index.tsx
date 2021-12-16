@@ -8,31 +8,50 @@ import {
 import { Input } from "./../../components/Input";
 import { Button } from "../../components/Button";
 import { FormContent, Section, Description } from "./styles";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { Col, Row, Container } from "reactstrap";
 import { BtnSecond } from "../../components/Button/styles";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
+  const { user, signIn } = useAuth();
+
   const { push } = useHistory();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  function handleSubmit(event: FormEvent) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function handleSignIn(event: FormEvent) {
     event.preventDefault();
 
-    const data = {
-      email,
-      password,
-    };
-
-    console.log(data);
-
-    setPassword("");
-    setEmail("");
+    try {
+      await signIn(data);
+      toast.success("Login efectuado com sucesso👌");
+      setData({
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      toast.error("Email ou senha inválida 🤯");
+      console.log(err);
+    }
   }
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <Section>
@@ -57,13 +76,13 @@ export default function SignIn() {
                 <span className="title">Entrar na plataforma</span>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSignIn}>
                 <div className="form-items">
                   <Input
                     icon={FaEnvelope}
                     name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={data.email}
+                    onChange={handleInputChange}
                     placeholder="example@her.com"
                     type="email"
                     required
@@ -74,8 +93,8 @@ export default function SignIn() {
                   <Input
                     icon={FaLock}
                     name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={data.password}
+                    onChange={handleInputChange}
                     placeholder="..........."
                     isPassword
                     type="password"

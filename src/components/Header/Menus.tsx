@@ -6,8 +6,12 @@ import { Collapse, Nav, NavbarToggler } from "reactstrap";
 import { allData } from "./data";
 import { Link } from "./Link";
 import { ButtonSecondary } from "../Button";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Menus() {
+  const { user } = useAuth();
+  console.log(user);
+
   const { push } = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 

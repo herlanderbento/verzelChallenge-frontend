@@ -1,8 +1,8 @@
-import { Container, Col, Row, Input as Select } from "reactstrap";
+import { Container, Col, Row } from "reactstrap";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Title } from "../../components/Title";
-import { Section } from "./styles";
+import { Section, Select } from "./styles";
 
 export default function Lessons() {
   return (
@@ -43,8 +43,10 @@ export default function Lessons() {
                   />
                 </div>
                 <div className="col-lg-3 col-lg-3">
-                  <label>Password</label>
-                  <Select className="mb-3" type="select">
+                  <label>Seleciona o módulo</label>
+                  <Select autoComplete="off" className="mb-3">
+                    <option className="option">Default Select</option>
+                    <option>Default Select</option>
                     <option>Default Select</option>
                   </Select>
                 </div>

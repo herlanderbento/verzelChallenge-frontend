@@ -92,3 +92,24 @@ export const Section = styled.div`
     }
   }
 `;
+
+export const Select = styled.select`
+  border: 2px solid transparent;
+  background: var(--background);
+  flex: 1;
+  width: 100%;
+  padding: 15px 10px;
+  font-size: 14px;
+  outline: none;
+  border-radius: 4px;
+  color: var(--text);
+
+  &:focus {
+    box-shadow: none;
+    border: 2px solid var(--yellow-dark);
+  }
+
+  .option {
+    line-height: 10px;
+  }
+`;

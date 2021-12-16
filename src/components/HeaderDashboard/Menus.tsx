@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { AiOutlineUserSwitch } from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { Collapse, Nav, NavbarToggler } from "reactstrap";
 import { allData } from "./data";
 import { Link } from "./Link";
-import { ButtonSecondary } from "../Button";
+import { UserInfo } from "../UserInfo";
 
 export function Menus() {
   const { push } = useHistory();
@@ -25,10 +25,8 @@ export function Menus() {
             <Link key={id} route={route} menu={menu} />
           ))}
         </Nav>
-        <ButtonSecondary onClick={() => push("/sign-in")}>
-          <AiOutlineUserSwitch />
-          Entrar
-        </ButtonSecondary>
+        <UserInfo />
+        <AiOutlineLogout className="icon" size={28} />
       </Collapse>
     </>
   );

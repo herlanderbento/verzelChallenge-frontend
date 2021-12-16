@@ -11,6 +11,12 @@ export const HeaderContent = styled.header`
     @media screen and (max-width: 767px) {
       padding: 15px 0;
     }
+
+    .icon {
+      color: var(--yellow-dark);
+      margin-left: 20px;
+      cursor: pointer;
+    }
   }
   .navbar-brand {
     color: var(--gray);

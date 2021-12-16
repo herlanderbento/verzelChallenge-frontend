@@ -33,7 +33,7 @@ interface IAllDataModulesLesson {
   lesson: ILesson[];
 }
 
-export function Courses() {
+export default function Courses() {
   const [modules, setModules] = useState([]);
   const [modulesLessons, setModulesLessons] = useState([]);
 

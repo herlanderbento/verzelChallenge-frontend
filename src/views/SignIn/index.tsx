@@ -1,64 +1,37 @@
-import { useState, FormEvent, ChangeEvent } from "react";
-import { useHistory } from "react-router-dom";
 import {
   FaEnvelope,
   FaFacebookF,
   FaGoogle,
   FaLock,
-  FaUser,
   FaWhatsapp,
 } from "react-icons/fa";
-import { toast } from "react-toastify";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { Col, Row, Container } from "reactstrap";
-
-import { Input } from "../../components/Input";
+import { Input } from "./../../components/Input";
 import { Button } from "../../components/Button";
 import { FormContent, Section, Description } from "./styles";
+import { useState, FormEvent } from "react";
+import { Col, Row, Container } from "reactstrap";
 import { BtnSecond } from "../../components/Button/styles";
-import { api } from "../../services/api";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { useHistory } from "react-router-dom";
 
-interface ISignUPProps {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export function SignUp() {
+export default function SignIn() {
   const { push } = useHistory();
 
-  const [data, setData] = useState<ISignUPProps>({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleFormOnSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    try {
-      const response = await api.post("/users", data);
+    const data = {
+      email,
+      password,
+    };
 
-      console.log(response);
+    console.log(data);
 
-      toast.success("Usuário cadastrado com sucesso👌");
-
-      setData({
-        name: "",
-        email: "",
-        password: "",
-      });
-    } catch (err) {
-      toast.error("Falha ao cadastrar usuário 🤯");
-      console.error(err);
-    }
+    setPassword("");
+    setEmail("");
   }
 
   return (
@@ -72,9 +45,9 @@ export function SignUp() {
                 a navegar na <br />
                 plataforma
               </h4>
-              <BtnSecond onClick={() => push("/sign-in")}>
+              <BtnSecond onClick={() => push("/sign-up")}>
                 <AiOutlineUserAdd />
-                Faz o login
+                Cadastrar-se agora
               </BtnSecond>
             </Description>
           </Col>
@@ -84,25 +57,13 @@ export function SignUp() {
                 <span className="title">Entrar na plataforma</span>
               </div>
 
-              <form onSubmit={handleFormOnSubmit}>
-                <div className="form-items">
-                  <Input
-                    icon={FaUser}
-                    name="name"
-                    value={data.name}
-                    onChange={handleInputChange}
-                    placeholder="name"
-                    type="text"
-                    required
-                  />
-                </div>
-
+              <form onSubmit={handleSubmit}>
                 <div className="form-items">
                   <Input
                     icon={FaEnvelope}
                     name="email"
-                    value={data.email}
-                    onChange={handleInputChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="example@her.com"
                     type="email"
                     required
@@ -113,8 +74,8 @@ export function SignUp() {
                   <Input
                     icon={FaLock}
                     name="password"
-                    value={data.password}
-                    onChange={handleInputChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="..........."
                     isPassword
                     type="password"

@@ -7,7 +7,7 @@ import emoji from "../../assets/icon/emoji.svg";
 import banner from "../../assets/img/layer.png";
 import { useHistory } from "react-router-dom";
 
-export function HomePage() {
+export function Home() {
   const { push } = useHistory();
 
   return (

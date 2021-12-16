@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Row, TabContent, TabPane } from "reactstrap";
 import { Container } from "../../styles/container";
 import { styleHyphenFormat } from "../../utils";
-import { Title, TitleRight } from "../Title";
+import { Title, TitleRight } from "../../components/Title";
 import { CourseContent, Section } from "./styles";
 import video from "../../assets/video/video.mp4";
 import { api } from "../../services/api";
@@ -33,7 +33,7 @@ interface IAllDataModulesLesson {
   lesson: ILesson[];
 }
 
-export function CoursePage() {
+export function Courses() {
   const [modules, setModules] = useState([]);
   const [modulesLessons, setModulesLessons] = useState([]);
 

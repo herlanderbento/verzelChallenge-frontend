@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
-import { Courses } from "../pages/course";
-import { Home } from "../pages/home";
+import { Courses } from "../pages/Courses";
+import { Home } from "../pages/Home";
 import { SignIn } from "../pages/SignIn";
 import { SignUp } from "../pages/SignUp";
 

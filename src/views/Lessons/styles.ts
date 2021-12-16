@@ -123,6 +123,11 @@ export const Section = styled.div`
       padding: 6px 0;
     }
   }
+
+  .text-waring {
+    font-size: 16px;
+    margin: 30px 0;
+  }
 `;
 
 export const Select = styled.select`

@@ -10,6 +10,10 @@ import { api } from "../../services/api";
 import { styleHyphenFormat } from "../../utils";
 import { Section, Select } from "./styles";
 
+interface IData {
+  id: string;
+}
+
 export default function Lessons() {
   const { token } = useAuth();
 
@@ -31,8 +35,8 @@ export default function Lessons() {
 
   async function fetchAllModules() {
     try {
-      const { data } = await api.get("modules");
-      setAllDataModules(data);
+      const response = await api.get("modules");
+      setAllDataModules(response?.data);
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +66,22 @@ export default function Lessons() {
     } catch (err) {
       toast.error("Falha ao cadastrar aula 🤯");
     }
+  }
+
+  function handleDeleteLessons(id: string) {
+    // eslint-disable-next-line no-restricted-globals
+    const message = confirm("Desejas eliminar esta aula?");
+
+    if (message) {
+      api
+        .delete(`/lessons/${id}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((_) => {
+          toast.success("Módulo eliminado com sucesso!");
+        });
+    }
+    fetchAllLessons();
   }
 
   return (
@@ -147,23 +167,29 @@ export default function Lessons() {
                   </tr>
                 </thead>
                 <tbody>
-                  {allDataLessons?.map(({ id, name, date_lesson }) => (
+                  {allDataLessons.length > 0 ? (
+                    allDataLessons?.map(({ id, name, date_lesson }) => (
+                      <>
+                        <th className="pt-2"></th>
+                        <tr key={id}>
+                          <td>{name}</td>
+                          <td>{date_lesson}</td>
+                          <td>
+                            <button onClick={() => handleDeleteLessons(id)}>
+                              <AiFillDelete />
+                            </button>
+                            <button>
+                              <AiOutlineEdit />
+                            </button>
+                          </td>
+                        </tr>
+                      </>
+                    ))
+                  ) : (
                     <>
-                      <th className="pt-2"></th>
-                      <tr key={id}>
-                        <td>{name}</td>
-                        <td>{date_lesson}</td>
-                        <td>
-                          <button>
-                            <AiFillDelete />
-                          </button>
-                          <button>
-                            <AiOutlineEdit />
-                          </button>
-                        </td>
-                      </tr>
+                      <h2 className="text-waring">Sem nenhum dados</h2>
                     </>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

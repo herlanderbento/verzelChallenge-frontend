@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { AiOutlineUserSwitch } from "react-icons/ai";
+import { useHistory } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { Collapse, Nav, NavbarToggler } from "reactstrap";
 import { allData } from "./data";
 import { Link } from "./Link";
-import { Button } from "./styles";
+import { ButtonSecondary } from "../Button";
 
 export function Menus() {
+  const { push } = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -23,10 +25,10 @@ export function Menus() {
             <Link key={id} route={route} menu={menu} />
           ))}
         </Nav>
-        <Button>
+        <ButtonSecondary onClick={() => push("/sign-in")}>
           <AiOutlineUserSwitch />
           Entrar
-        </Button>
+        </ButtonSecondary>
       </Collapse>
     </>
   );

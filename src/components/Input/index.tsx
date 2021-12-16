@@ -40,19 +40,20 @@ export function Input({ icon: Icon, isPassword = false, ...rest }: IProps) {
         onBlur={handleInputBlur}
         {...rest}
         type={showPassword ? "text" : rest.type}
+        autoComplete="off"
       />
       {isPassword &&
         (showPassword ? (
           <FaEyeSlash
             size={16}
-            color="#00e676"
+            color="#eba417"
             onClick={() => setShowPassword(!showPassword)}
             className="icon-click"
           />
         ) : (
           <FaEye
             size={16}
-            color="#00e676"
+            color="#eba417"
             onClick={() => setShowPassword(!showPassword)}
             className="icon-click"
           />

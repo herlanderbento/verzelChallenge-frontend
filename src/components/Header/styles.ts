@@ -104,26 +104,3 @@ export const HeaderContent = styled.header`
     }
   }
 `;
-
-export const Button = styled.button`
-  background: var(--sign-in) !important;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-  padding: 12px 34px 12px 17px;
-
-  border-radius: 100px;
-  border: 0;
-
-  &:focus {
-    border: 0 !important;
-    box-shadow: transparent !important;
-    outline: 0 !important;
-  }
-
-  svg {
-    margin-right: 8px;
-    font-size: 22px;
-    color: var(--yellow-dark);
-  }
-`;

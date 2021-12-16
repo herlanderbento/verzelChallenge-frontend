@@ -9,17 +9,16 @@ export const Container = styled.div<IContainerProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 2px solid var(--borders);
-  background-color: var(--borders);
+  border: 2px solid var(--black);
+  background-color: var(--black);
   border-radius: 4px;
-  width: 300px;
-  height: 42px;
+  width: 100%;
   padding: 10px 15px;
   margin-bottom: 10px;
 
   svg {
     margin-left: 5px;
-    color: #373737;
+    color: var(--text);
   }
 
   ${(props) =>
@@ -42,14 +41,20 @@ export const Container = styled.div<IContainerProps>`
   input {
     flex: 1;
     height: 100%;
-    padding-left: 15px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 14px;
     background-color: transparent;
     color: #fff;
     border: 0;
+    outline: none;
+
+    &::placeholder {
+      font-size: 14px;
+    }
   }
 
   .icon-click {
     cursor: pointer;
+    margin-right: 8px;
   }
 `;

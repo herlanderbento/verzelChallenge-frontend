@@ -8,7 +8,7 @@ import { SignUp } from "../pages/SignUp";
 import { Users } from "../pages/Users";
 import { Lessons } from "../pages/Lessons";
 
-import Route from "./routes";
+import Route from "./Routes";
 
 export default function Routes() {
   return (

@@ -7,8 +7,51 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiSoundModuleLine } from "react-icons/ri";
 
 import { SiDiscourse } from "react-icons/si";
+import { api } from "../../services/api";
+import { useEffect, useState } from "react";
+import { allDataLessons } from "../Courses/data";
 
 export default function Dashboard() {
+  const [allDataLessons, setAllDataLessons] = useState([]);
+  const [allCountUsers, setAllCountUsers] = useState([]);
+  const [allCountModules, setAllCountModules] = useState([]);
+
+  async function fetchAllLessons() {
+    try {
+      const { data } = await api.get("lessons");
+
+      setAllDataLessons(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function fetchAllModules() {
+    try {
+      const { data } = await api.get("modules");
+
+      setAllCountModules(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function fetchAllUsers() {
+    try {
+      const { data } = await api.get("users");
+
+      setAllCountUsers(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllLessons();
+    fetchAllUsers();
+    fetchAllModules();
+  }, []);
+
   return (
     <Section>
       <Container>
@@ -32,7 +75,7 @@ export default function Dashboard() {
                 <CardItems>
                   <div className="header">
                     <div className="desc">
-                      <h4 className="count">450</h4>
+                      <h4 className="count">{allCountUsers.length}</h4>
                       <span className="title">Usuários</span>
                     </div>
                     <div className="icon">
@@ -48,7 +91,7 @@ export default function Dashboard() {
                 <CardItems>
                   <div className="header">
                     <div className="desc">
-                      <h4 className="count">450</h4>
+                      <h4 className="count">{allDataLessons.length}</h4>
                       <span className="title">Aulas</span>
                     </div>
                     <div className="icon">
@@ -64,7 +107,7 @@ export default function Dashboard() {
                 <CardItems>
                   <div className="header">
                     <div className="desc">
-                      <h4 className="count">450</h4>
+                      <h4 className="count">{allCountModules.length}</h4>
                       <span className="title">Módulos</span>
                     </div>
                     <div className="icon">
@@ -84,29 +127,25 @@ export default function Dashboard() {
             <div className="section">
               <div className="title">
                 <h3>Aulas</h3>
-                <span>Total de aulas (20)</span>
+                <span>Total de aulas ({allDataLessons.length})</span>
               </div>
               <table>
                 <thead>
                   <tr>
                     <th scope="col">Aulas</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Módulos</th>
                   </tr>
                 </thead>
-                <br />
                 <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <div className="break"></div>
-                  <tr>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
+                  {allDataLessons?.map(({ id, name, date_lesson, modules }) => (
+                    <>
+                      <tr>
+                        <td>{name}</td>
+                        <td>{date_lesson}</td>
+                      </tr>
+                      <div className="break"></div>
+                    </>
+                  ))}
                 </tbody>
               </table>
             </div>

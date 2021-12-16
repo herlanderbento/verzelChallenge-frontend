@@ -10,6 +10,7 @@ export const Section = styled.div`
 
     .title {
       margin: 20px 0 30px;
+      color: var(--gray);
     }
 
     table {

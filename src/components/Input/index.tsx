@@ -11,11 +11,17 @@ import { IconBaseProps } from "react-icons/lib";
 import { Container } from "./styles";
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
-  icon: ComponentType<IconBaseProps>;
+  icon?: ComponentType<IconBaseProps>;
   isPassword?: Boolean;
+  className?: string;
 }
 
-export function Input({ icon: Icon, isPassword = false, ...rest }: IProps) {
+export function Input({
+  icon: Icon,
+  className,
+  isPassword = false,
+  ...rest
+}: IProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -32,7 +38,7 @@ export function Input({ icon: Icon, isPassword = false, ...rest }: IProps) {
   }, []);
 
   return (
-    <Container isFilled={isFilled} isFocused={isFocused}>
+    <Container className={className} isFilled={isFilled} isFocused={isFocused}>
       {Icon && <Icon size={16} />}
       <input
         ref={inputRef}

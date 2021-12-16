@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { shade } from "polished";
 
 export const Btn = styled.button`
-  margin-top: 10px;
   cursor: pointer;
   width: 100%;
   height: 48px;

@@ -4,14 +4,14 @@ import { Input } from "../../components/Input";
 import { Title } from "../../components/Title";
 import { Section } from "./styles";
 
-export default function Users() {
+export default function ModulePage() {
   return (
     <Section>
       <Container>
         <Row className="justify-content-center">
           <Col lg="11">
             <div className="dashboard-info mb-5">
-              <Title subTitle="Usuários" />
+              <Title subTitle="Módulos" />
             </div>
           </Col>
         </Row>
@@ -20,34 +20,13 @@ export default function Users() {
           <Col lg="11">
             <form>
               <div className="row align-items-stretch">
-                <div className="col-lg-3 col-lg-3">
-                  <label>Nome completo</label>
+                <div className="col-lg-9">
+                  <label>Módulos</label>
 
                   <Input
                     className="input-form"
                     name="name"
-                    placeholder="john doe"
-                    type="text"
-                    required
-                  />
-                </div>
-                <div className="col-lg-3 col-lg-3">
-                  <label>Email</label>
-
-                  <Input
-                    className="input-form"
-                    name="name"
-                    placeholder="example@doe.com"
-                    type="text"
-                    required
-                  />
-                </div>
-                <div className="col-lg-3 col-lg-3">
-                  <label>Password</label>
-                  <Input
-                    className="input-form"
-                    name="name"
-                    placeholder=".........."
+                    placeholder="Digita o módulos"
                     type="text"
                     required
                   />
@@ -64,8 +43,8 @@ export default function Users() {
           <Col lg="11">
             <div className="section">
               <div className="title">
-                <h3>Lista de usuários</h3>
-                <span>Total de Lista usuários (20)</span>
+                <h3>Lista de módulos</h3>
+                <span>Total de módulos (20)</span>
               </div>
               <table>
                 <thead>

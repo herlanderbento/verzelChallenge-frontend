@@ -86,5 +86,9 @@ export const Section = styled.div`
   }
   .input-form {
     background: var(--background);
+
+    input[type="date"] {
+      padding: 6px 0;
+    }
   }
 `;

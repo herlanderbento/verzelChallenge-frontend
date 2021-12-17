@@ -1,24 +1,21 @@
 import { FormEvent, useEffect, useState } from "react";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
+import { v4 as uuidV4 } from "uuid";
 import { toast } from "react-toastify";
-import { Container, Button as Btn, Col, Row } from "reactstrap";
+import { Container, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Title } from "../../components/Title";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../services/api";
-import { styleHyphenFormat } from "../../utils";
 import { Section, Select } from "./styles";
-
-interface IData {
-  id: string;
-}
 
 export default function Lessons() {
   const { token } = useAuth();
 
   const [allDataLessons, setAllDataLessons] = useState([]);
   const [allDataModules, setAllDataModules] = useState([]);
+  const [idLesson, setIdLesson] = useState("");
   const [name, setName] = useState("");
   const [date_lesson, setDateLesson] = useState("");
   const [module_id, setModuleId] = useState("");
@@ -47,20 +44,35 @@ export default function Lessons() {
     fetchAllModules();
   }, []);
 
-  async function handleFormOnSubmit(event: FormEvent) {
+  function handleDeleteLesson(id: string) {
+    // eslint-disable-next-line no-restricted-globals
+
+    api.delete(`/lessons/${id}/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    fetchAllLessons();
+  }
+
+  async function handleCreateLesson(event: FormEvent) {
     event.preventDefault();
 
-    const data = {
-      name,
-      date_lesson,
-      module_id,
-    };
     try {
+      const data = {
+        name,
+        date_lesson,
+        module_id,
+      };
+
       const response = await api.post("/lessons/", data, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       fetchAllLessons();
+
+      setName("");
+      setDateLesson("");
+      setModuleId("");
 
       toast.success("Aula cadastrado com sucesso👌");
     } catch (err) {
@@ -68,20 +80,30 @@ export default function Lessons() {
     }
   }
 
-  function handleDeleteLessons(id: string) {
-    // eslint-disable-next-line no-restricted-globals
-    const message = confirm("Desejas eliminar esta aula?");
+  async function handleUpdateLesson(event: FormEvent) {
+    event.preventDefault();
 
-    if (message) {
-      api
-        .delete(`/lessons/${id}/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((_) => {
-          toast.success("Módulo eliminado com sucesso!");
-        });
+    try {
+      const data = {
+        name,
+        date_lesson,
+        module_id,
+      };
+
+      const response = await api.put(`/lessons/${idLesson}/`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      fetchAllLessons();
+
+      setName("");
+      setDateLesson("");
+      setModuleId("");
+
+      toast.success("Aula cadastrado com sucesso👌");
+    } catch (err) {
+      toast.error("Falha ao cadastrar aula 🤯");
     }
-    fetchAllLessons();
   }
 
   return (
@@ -96,9 +118,9 @@ export default function Lessons() {
         </Row>
         <Row className="justify-content-center">
           <Col lg="11">
-            <form onSubmit={handleFormOnSubmit}>
+            <form onSubmit={idLesson ? handleUpdateLesson : handleCreateLesson}>
               <div className="row align-items-stretch">
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Aulas</label>
 
                   <Input
@@ -111,7 +133,7 @@ export default function Lessons() {
                     required
                   />
                 </div>
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Data da aulas</label>
 
                   <Input
@@ -124,7 +146,7 @@ export default function Lessons() {
                     required
                   />
                 </div>
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Seleciona o módulo</label>
                   <Select
                     onChange={(e) => setModuleId(e.target.value)}
@@ -134,15 +156,23 @@ export default function Lessons() {
                   >
                     <option className="option">Seleciona o módulo</option>
                     {allDataModules?.map(({ id, name }) => (
-                      <option value={id} key={styleHyphenFormat(id)}>
+                      <option key={id} value={id}>
                         {name}
                       </option>
                     ))}
                   </Select>
                 </div>
-                <div className="col-lg-3 col-lg- mt-5">
-                  <Button className="mt-1">Cadastrar</Button>
-                </div>
+              </div>
+              <div className="row">
+                {idLesson ? (
+                  <div className="col-lg-4">
+                    <Button className="mt-1">Editar</Button>
+                  </div>
+                ) : (
+                  <div className="col-lg-4">
+                    <Button className="mt-1">Cadastrar</Button>
+                  </div>
+                )}
               </div>
             </form>
           </Col>
@@ -168,27 +198,43 @@ export default function Lessons() {
                 </thead>
                 <tbody>
                   {allDataLessons.length > 0 ? (
-                    allDataLessons?.map(({ id, name, date_lesson }) => (
-                      <>
-                        <th className="pt-2"></th>
-                        <tr key={id}>
-                          <td>{name}</td>
-                          <td>{date_lesson}</td>
-                          <td>
-                            <button onClick={() => handleDeleteLessons(id)}>
-                              <AiFillDelete />
-                            </button>
-                            <button>
-                              <AiOutlineEdit />
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    ))
+                    allDataLessons?.map(
+                      ({ id, name, date_lesson, module_id }) => (
+                        <>
+                          <tr key={uuidV4()}>
+                            <td>{name}</td>
+                            <td>{date_lesson}</td>
+                            <td>
+                              <button
+                                id="Info"
+                                onClick={() => handleDeleteLesson(id)}
+                              >
+                                <AiFillDelete />
+                              </button>
+                              <UncontrolledTooltip
+                                placement="top"
+                                target="Info"
+                              >
+                                Duplo click para eliminar os dados
+                              </UncontrolledTooltip>
+                              <button
+                                onClick={() => {
+                                  setName(name);
+                                  setDateLesson(date_lesson);
+                                  setModuleId(module_id);
+                                  setIdLesson(id);
+                                }}
+                              >
+                                <AiOutlineEdit />
+                              </button>
+                            </td>
+                          </tr>
+                          <th className="pt-2"></th>
+                        </>
+                      )
+                    )
                   ) : (
-                    <>
-                      <h2 className="text-waring">Sem nenhum dados</h2>
-                    </>
+                    <h2 className="text-waring">Sem nenhum dados</h2>
                   )}
                 </tbody>
               </table>

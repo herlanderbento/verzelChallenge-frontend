@@ -36,7 +36,25 @@ acesse <http://localhost:3000>
 
 ## Preview da aplicação
 
+
+```
+
+- Home
+
 <img src="./src/assets/img/home.png" alt="home">
+
+- Aulas
+
+<img src="./src/assets/img/aulas.png" alt="aulas">
+
+- Login
+
+<img src="./src/assets/img/login.png" alt="login">
+
+- Dashboard
+
+<img src="./src/assets/img/dashboard.png" alt="dashboard">
+
 # Funcionalidades
 
 Os recursos funcionais da aplicação são:
@@ -47,4 +65,3 @@ Os recursos funcionais da aplicação são:
 
 - Listagem das aulas e módulos em ordem alfabética.
 - Validação dos campos antes da inserção
-```

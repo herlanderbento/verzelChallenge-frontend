@@ -134,7 +134,7 @@ export default function Dashboard() {
                 <thead>
                   <tr>
                     <th scope="col">Aulas</th>
-                    <th scope="col">Data</th>
+                    <th scope="col">Data de inicio</th>
                   </tr>
                 </thead>
                 <tbody>

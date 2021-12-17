@@ -5,7 +5,7 @@ import { CardCourseItems, VideoBg } from "./styles";
 interface ICardsCoursesProps {
   video: string;
   name: string;
-  date_lesson: Date;
+  date_lesson: string;
 }
 
 export function CardsCourses({ video, name, date_lesson }: ICardsCoursesProps) {

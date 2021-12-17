@@ -17,18 +17,18 @@ export const Section = styled.div`
       width: 100%;
       thead {
         border-top: 1px solid var(--background);
-        border-bottom: 1px solid var(--background);
+        //border-bottom: 1px solid var(--background);
       }
       th {
         color: var(--gray);
         font-weight: 500;
-        padding: 1rem 2rem;
+        padding: 0.2rem 2rem;
         text-align: left;
-        line-height: 1.5rem;
+        line-height: 5rem !important;
       }
 
       td {
-        padding: 1rem 2rem;
+        padding: 1.8rem 2rem;
         border: 0;
         flex-grow: 1;
         background: var(--background);

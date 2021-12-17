@@ -203,7 +203,7 @@ export default function Lessons() {
                         <>
                           <tr key={uuidV4()}>
                             <td>{name}</td>
-                            <td>{date_lesson}</td>
+                            <td>{String(date_lesson)?.substring(0, 10)}</td>
                             <td>
                               <button
                                 id="Info"

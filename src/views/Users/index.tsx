@@ -1,18 +1,23 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { Container, Col, Row } from "reactstrap";
+import { Container, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Title } from "../../components/Title";
+import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../services/api";
 import { Section } from "./styles";
 
 export default function Users() {
+  const { token } = useAuth();
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const [allDataUsers, setAllDataUsers] = useState([]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setData({
@@ -20,6 +25,19 @@ export default function Users() {
       [e.target.name]: e.target.value,
     });
   }
+
+  async function fetchAllUsers() {
+    try {
+      const response = await api.get("users");
+      setAllDataUsers(response?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
 
   async function handleCreateUser(event: FormEvent) {
     event.preventDefault();
@@ -40,6 +58,16 @@ export default function Users() {
       toast.error("Falha ao cadastrar usuário 🤯");
       console.error(err);
     }
+  }
+
+  function handleDeleteUsers(id: string) {
+    // eslint-disable-next-line no-restricted-globals
+
+    api.delete(`/users/${id}/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    fetchAllUsers();
   }
 
   return (
@@ -109,7 +137,7 @@ export default function Users() {
             <div className="section">
               <div className="title">
                 <h3>Lista de usuários</h3>
-                <span>Total de Lista usuários (20)</span>
+                <span>Total de Lista usuários ({allDataUsers.length})</span>
               </div>
               <table>
                 <thead>
@@ -120,19 +148,30 @@ export default function Users() {
                   </tr>
                 </thead>
                 <br />
-                <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td></td>
-                  </tr>
-                  <div className="break"></div>
-                  <tr>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td></td>
-                  </tr>
-                </tbody>
+                {allDataUsers.length > 0 ? (
+                  allDataUsers?.map(({ id, name, email }) => (
+                    <>
+                      <tr key={id}>
+                        <td>{name}</td>
+                        <td>{email}</td>
+                        <td>
+                          <button
+                            id="Info"
+                            onClick={() => handleDeleteUsers(id)}
+                          >
+                            <AiFillDelete />
+                          </button>
+                          <UncontrolledTooltip placement="top" target="Info">
+                            Duplo click para eliminar os dados
+                          </UncontrolledTooltip>
+                        </td>
+                      </tr>
+                      <th className="pt-2"></th>
+                    </>
+                  ))
+                ) : (
+                  <h2 className="text-waring">Sem nenhum dados</h2>
+                )}
               </table>
             </div>
           </Col>

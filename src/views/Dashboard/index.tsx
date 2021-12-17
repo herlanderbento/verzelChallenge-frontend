@@ -142,9 +142,9 @@ export default function Dashboard() {
                     <>
                       <tr>
                         <td>{name}</td>
-                        <td>{date_lesson}</td>
+                        <td>{String(date_lesson)?.substring(0, 10)}</td>
                       </tr>
-                      <div className="break"></div>
+                      <th></th>
                     </>
                   ))}
                 </tbody>

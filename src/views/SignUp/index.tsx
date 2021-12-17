@@ -55,6 +55,8 @@ export default function SignUp() {
         email: "",
         password: "",
       });
+
+      push("/sign-in");
     } catch (err) {
       toast.error("Falha ao cadastrar usuário 🤯");
       console.error(err);

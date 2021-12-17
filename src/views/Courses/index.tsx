@@ -78,7 +78,7 @@ export default function Courses() {
               "
             />
             <div className="modules-items">
-              <Row className="pt-3">
+              <Row className="align-items-stretch pt-3">
                 {modules?.map(({ id, name, lessonCount }: IAllDataModules) => (
                   <Cards
                     key={styleHyphenFormat(id)}
@@ -115,7 +115,7 @@ export default function Courses() {
                           video={video}
                           key={styleHyphenFormat(id)}
                           name={name}
-                          date_lesson={date_lesson}
+                          date_lesson={String(date_lesson)?.substring(0, 10)}
                         />
                       ))}
                     </Row>

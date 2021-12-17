@@ -82,6 +82,8 @@ export const VideoBg = styled.video`
 export const CardCourseItems = styled(Card)`
   background: var(--background);
   border: 0;
+  width: 100%;
+  height: 100%;
 
   .description {
     padding: 20px;

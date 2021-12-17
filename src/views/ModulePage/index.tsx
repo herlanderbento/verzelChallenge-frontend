@@ -35,7 +35,6 @@ export default function ModulePage() {
 
     try {
       const data = { name };
-      console.log(data);
       const response = await api.post("/modules/", data, {
         headers: { Authorization: `Bearer ${token}` },
       });

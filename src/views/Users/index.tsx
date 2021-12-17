@@ -1,10 +1,47 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 import { Container, Col, Row } from "reactstrap";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Title } from "../../components/Title";
+import { api } from "../../services/api";
 import { Section } from "./styles";
 
 export default function Users() {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function handleCreateUser(event: FormEvent) {
+    event.preventDefault();
+
+    try {
+      const response = await api.post("/users", data);
+
+      console.log(response);
+
+      toast.success("Usuário cadastrado com sucesso👌");
+
+      setData({
+        name: "",
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      toast.error("Falha ao cadastrar usuário 🤯");
+      console.error(err);
+    }
+  }
+
   return (
     <Section>
       <Container>
@@ -18,41 +55,48 @@ export default function Users() {
 
         <Row className="justify-content-center">
           <Col lg="11">
-            <form>
+            <form onSubmit={handleCreateUser}>
               <div className="row align-items-stretch">
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Nome completo</label>
 
                   <Input
                     className="input-form"
                     name="name"
-                    placeholder="john doe"
+                    value={data.name}
+                    onChange={handleInputChange}
+                    placeholder="name"
                     type="text"
                     required
                   />
                 </div>
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Email</label>
 
                   <Input
                     className="input-form"
-                    name="name"
-                    placeholder="example@doe.com"
-                    type="text"
+                    name="email"
+                    value={data.email}
+                    onChange={handleInputChange}
+                    placeholder="example@her.com"
+                    type="email"
                     required
                   />
                 </div>
-                <div className="col-lg-3 col-lg-3">
+                <div className="col-lg-4">
                   <label>Password</label>
                   <Input
                     className="input-form"
-                    name="name"
-                    placeholder=".........."
-                    type="text"
+                    name="password"
+                    value={data.password}
+                    onChange={handleInputChange}
+                    placeholder="..........."
+                    isPassword
+                    type="password"
                     required
                   />
                 </div>
-                <div className="col-lg-3 col-lg- mt-5">
+                <div className="col-lg-4">
                   <Button className="mt-1">Cadastrar</Button>
                 </div>
               </div>

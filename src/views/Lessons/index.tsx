@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEvent, useEffect, useState } from "react";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import { v4 as uuidV4 } from "uuid";
@@ -12,7 +13,6 @@ import { Section, Select } from "./styles";
 
 export default function Lessons() {
   const { token } = useAuth();
-
   const [allDataLessons, setAllDataLessons] = useState([]);
   const [allDataModules, setAllDataModules] = useState([]);
   const [idLesson, setIdLesson] = useState("");
